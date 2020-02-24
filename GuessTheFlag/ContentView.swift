@@ -8,16 +8,32 @@
 
 import SwiftUI
 
+let colorList = [
+    Color(red:0.51, green:0.93, blue:0.93),
+    Color(red:0.00, green:0.81, blue:0.79),
+    Color(red:0.98, green:0.69, blue:0.63),
+    Color(red:0.88, green:0.44, blue:0.33)
+]
+
 struct ContentView: View {
     var body: some View {
-    
+        
         ZStack {
-            VStack(spacing: 0) {
-                Color(red:0.51, green:0.93, blue:0.93)
-                Color(red:0.00, green:0.81, blue:0.79)
-                Color(red:0.98, green:0.69, blue:0.63)
-                Color(red:0.88, green:0.44, blue:0.33)
-            }.edgesIgnoringSafeArea(.all)
+            //            VStack(spacing: 0) {
+            //                ForEach(0 ..< colorList.count) {
+            //                    LinearGradient(gradient: Gradient(colors: [colorList[$0], colorList[($0+1)/colorList.count]]), startPoint: .top, endPoint: .bottom)
+            //
+            //                }
+            //            }.edgesIgnoringSafeArea(.all)
+            //
+            
+            LinearGradient(gradient:
+                Gradient(colors: [
+                    Color(red:0.51, green:0.38, blue:0.76),
+                    Color(red:0.18, green:0.75, blue:0.57)]),
+                           startPoint: .top,
+                           endPoint: .bottom)
+                .edgesIgnoringSafeArea(.all)
             
             Text("Hello World").bold()
         }

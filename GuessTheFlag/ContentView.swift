@@ -18,24 +18,13 @@ let colorList = [
 struct ContentView: View {
     var body: some View {
         
-        ZStack {
-            //            VStack(spacing: 0) {
-            //                ForEach(0 ..< colorList.count) {
-            //                    LinearGradient(gradient: Gradient(colors: [colorList[$0], colorList[($0+1)/colorList.count]]), startPoint: .top, endPoint: .bottom)
-            //
-            //                }
-            //            }.edgesIgnoringSafeArea(.all)
-            //
-            
-            LinearGradient(gradient:
-                Gradient(colors: [
-                    Color(red:0.51, green:0.38, blue:0.76),
-                    Color(red:0.18, green:0.75, blue:0.57)]),
-                           startPoint: .top,
-                           endPoint: .bottom)
-                .edgesIgnoringSafeArea(.all)
-            
-            Text("Hello World").bold()
+        Button(action: {
+            print("button is pressed.")
+        }) {
+            HStack {
+                Image(systemName: "pencil")
+                Text("Edit")
+            }
         }
     }
 }

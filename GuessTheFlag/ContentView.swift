@@ -8,24 +8,17 @@
 
 import SwiftUI
 
-let colorList = [
-    Color(red:0.51, green:0.93, blue:0.93),
-    Color(red:0.00, green:0.81, blue:0.79),
-    Color(red:0.98, green:0.69, blue:0.63),
-    Color(red:0.88, green:0.44, blue:0.33)
-]
-
 struct ContentView: View {
+    @State private var showingAlert = false
+    
     var body: some View {
-        
-        Button(action: {
-            print("button is pressed.")
-        }) {
-            HStack {
-                Image(systemName: "pencil")
-                Text("Edit")
-            }
+        Button("Clicked Me.") {
+            self.showingAlert = true
         }
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Hello SiftUI"), message: Text("some details."), dismissButton: .default(Text("OK")))
+        }
+     
     }
 }
 

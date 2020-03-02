@@ -21,31 +21,25 @@ struct ContentView: View {
         
         ZStack {
             Color.blue.edgesIgnoringSafeArea(.all)
-            
             VStack {
                 VStack(spacing: 30) {
                     Text("Tap the flag of").foregroundColor(.white)
                     Text(countries[correctAnswear]).foregroundColor(.white)
-                    
                 }
+                
                 Divider()
-                ForEach(0 ..< 3) { number in
-                    Button(action: {
-                        self.flagTapped(number)
-                        
-                    }) {
-                        Image(self.countries[number]).renderingMode(.original)
-                    }
-                    Spacer()
+                
+                ShowFlag(countries: countries) {
+                    number in
+                    self.flagTapped(number)
                 }
+                
+                Spacer()
             }.alert(isPresented: $showingScore) {
                 Alert(title: Text("Score"), message: Text(scoreTitle), dismissButton: .default(Text("Continue")) {
                     self.askNewQuestion()
                     })
-                
             }
-            
-            
         }
     }
     
@@ -63,6 +57,22 @@ struct ContentView: View {
         correctAnswear = Int.random(in: 0...2)
     }
 }
+
+struct ShowFlag: View {
+    var countries: [String]
+    var action: (Int)->()
+    
+    var body: some View {
+        ForEach(0 ..< 3) { number in
+            Button(action: {
+                self.action(number)
+            }) {
+                Image(self.countries[number]).renderingMode(.original)
+            }
+        }
+    }
+}
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

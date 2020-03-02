@@ -10,9 +10,12 @@ import SwiftUI
 
 struct ContentView: View {
     
-    static let countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russian", "Spain", "UK", "US"]
+    @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     
-    var correctAnswear = Int.random(in: 0...2)
+    @State private var scoreTitle = ""
+    @State private var correctAnswear = Int.random(in: 0...2)
+    
+    @State private var showingScore = false
     
     var body: some View {
         
@@ -22,29 +25,42 @@ struct ContentView: View {
             VStack {
                 VStack(spacing: 30) {
                     Text("Tap the flag of").foregroundColor(.white)
-                    Text(ContentView.countries[correctAnswear]).foregroundColor(.white)
+                    Text(countries[correctAnswear]).foregroundColor(.white)
                     
                 }
                 Divider()
-                FlagButtonList()
-                Spacer()
+                ForEach(0 ..< 3) { number in
+                    Button(action: {
+                        self.flagTapped(number)
+                        
+                    }) {
+                        Image(self.countries[number]).renderingMode(.original)
+                    }
+                    Spacer()
+                }
+            }.alert(isPresented: $showingScore) {
+                Alert(title: Text("Score"), message: Text(scoreTitle), dismissButton: .default(Text("Continue")) {
+                    self.askNewQuestion()
+                    })
+                
             }
+            
+            
         }
-        
-        
     }
-}
-
-struct FlagButtonList: View {
-    var body: some View {
-        ForEach(0 ..< 3) { number in
-            Button(action: {
-                // button pressed
-                print(number)
-            }) {
-                Image(ContentView.countries[number]).renderingMode(.original)
-            }
+    
+    func flagTapped(_ number: Int) {
+        if number == correctAnswear {
+            scoreTitle = "Correct"
+        } else {
+            scoreTitle = "Wrong"
         }
+        showingScore = true
+    }
+    
+    func askNewQuestion() {
+        countries = countries.shuffled()
+        correctAnswear = Int.random(in: 0...2)
     }
 }
 

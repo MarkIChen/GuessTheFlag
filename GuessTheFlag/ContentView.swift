@@ -20,11 +20,14 @@ struct ContentView: View {
     var body: some View {
         
         ZStack {
-            Color.blue.edgesIgnoringSafeArea(.all)
+            LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom).edgesIgnoringSafeArea(.all)
+            
             VStack {
                 VStack(spacing: 30) {
-                    Text("Tap the flag of").foregroundColor(.white)
-                    Text(countries[correctAnswear]).foregroundColor(.white)
+                    Text("Tap the flag ...").foregroundColor(.white)
+                    Text(countries[correctAnswear])
+                        .foregroundColor(.white)
+                        .font(.largeTitle).fontWeight(.bold)
                 }
                 
                 Divider()
@@ -63,13 +66,20 @@ struct ShowFlag: View {
     var action: (Int)->()
     
     var body: some View {
-        ForEach(0 ..< 3) { number in
-            Button(action: {
-                self.action(number)
-            }) {
-                Image(self.countries[number]).renderingMode(.original)
+        VStack(spacing: 20){
+            ForEach(0 ..< 3) { number in
+                Button(action: {
+                    self.action(number)
+                }) {
+                    Image(self.countries[number])
+                        .renderingMode(.original)
+                        .clipShape(Capsule())
+                        .overlay(Capsule().stroke(Color.black, lineWidth: 1))
+                        .shadow(color: .black, radius: 2, x: 1, y: 1)
+                }
             }
         }
+
     }
 }
 
